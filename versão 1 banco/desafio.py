@@ -7,9 +7,9 @@ def menu():
     [4]\t Nova conta
     [5]\t Listar contas
     [6]\t Novo usuário
-    [0] Sair
+    [0]\t Sair
     => """
-    return (input(menu))
+    return (int(input(menu)))
 
 saldo = 0
 limite = 500
@@ -27,6 +27,21 @@ def depositar(saldo, valor, extrato, /):
     
     return saldo, extrato
 
+def sacar(*, saldo, valor, extrato, limite, numero_saques, limite_saques):
+    if valor > saldo:
+            print("Operação falhou! Você não tem saldo suficiente.")
+        
+    elif valor > limite_saques:
+        print("Operação falhou! O valor do saque excede o limite.")
+        
+    elif valor > 0:
+        saldo -= valor
+        extrato += f"Saque: R$ {valor:.2f}\n"
+        numero_saques += 1
+
+    elif numero_saques > LIMITE_SAQUES:
+        print("Operação falhou! Número máximo de saques excedido.")
+
 while True:
     opcao = menu()
 
@@ -37,24 +52,17 @@ while True:
         
 
     elif opcao == 2:
-        valor_saque = float(input("Informe o valor do saque: "))
+        valor = float(input("Informe o valor do saque: "))
 
-        if valor_saque > saldo:
-            print("Operação falhou! Você não tem saldo suficiente.")
+        saldo, extrato = sacar(
+            saldo=saldo,
+            valor=valor,
+            extrato=extrato,
+            limite=limite,
+            numero_saques=numero_saques,
+            limite_saques=LIMITE_SAQUES
+        )
         
-        elif valor_saque > limite:
-            print("Operação falhou! O valor do saque excede o limite.")
-        
-        elif valor_saque > 0:
-            saldo -= valor_saque
-            extrato += f"Saque: R$ {valor_saque:.2f}\n"
-            numero_saques += 1
-
-        elif numero_saques > LIMITE_SAQUES:
-            print("Operação falhou! Número máximo de saques excedido.")
-        
-        else:
-            print("Operação falhou! O valor informado é inválido.")
     
     elif opcao == 3:
         print("\n========== EXTRATO ==========")
