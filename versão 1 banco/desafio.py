@@ -1,17 +1,22 @@
-menu = """
-
-    [1] Depositar
-    [2] Sacar
-    [3] Extrato
+def menu(): 
+    menu = """\n
+    ======== MENU ========
+    [1]\t Depositar
+    [2]\t Sacar
+    [3]\t Extrato
+    [4]\t Nova conta
+    [5]\t Listar contas
+    [6]\t Novo usuário
     [0] Sair
-
-=> """
+    => """
+    return (input(menu))
 
 saldo = 0
 limite = 500
 extrato = ""
 numero_saques = 0
 LIMITE_SAQUES = 3
+
 
 while True:
     opcao = int(input(menu))
