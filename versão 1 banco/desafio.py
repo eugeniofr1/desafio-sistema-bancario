@@ -75,6 +75,10 @@ def criar_conta(agencia, numero_conta, usuarios):
     
      print("\n Usuário não encontrado, criação de conta encerrado!")
 
+def listar_contas(contas):
+     for conta in contas:
+          print(f" Agência: {conta['agencia']}, Conta {conta['numero_conta']}, Titular {conta['usuario']['nome']}")
+
 while True:
     opcao = menu()
 
@@ -109,6 +113,9 @@ while True:
 
          if conta:
               contas.append(conta)
+    
+    elif opcao == 5:
+         listar_contas(contas)
 
     elif opcao == 6:
          criar_usuario(usuarios)
