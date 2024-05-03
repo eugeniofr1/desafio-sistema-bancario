@@ -11,11 +11,14 @@ def menu():
     => """
     return (int(input(menu)))
 
+LIMITE_SAQUES = 3
+AGENCIA = "0001"
 saldo = 0
 limite = 500
 extrato = ""
 numero_saques = 0
-LIMITE_SAQUES = 3
+usuarios = []
+contas = []
 
 def depositar(saldo, valor, extrato, /):
     if valor > 0:
@@ -41,6 +44,26 @@ def sacar(*, saldo, valor, extrato, limite, numero_saques, limite_saques):
 
     elif numero_saques > LIMITE_SAQUES:
         print("Operação falhou! Número máximo de saques excedido.")
+
+def criar_usuario(usuarios):
+     cpf = input("Informe o CPF (somente números): ")
+     usuario = filtrar_usuario(cpf, usuarios)
+
+     if usuario:
+        print("\nJá existe usuário com esse CPF!")
+        return
+
+     nome = input("Informe o nome completo: ") 
+     data_nascimento = input("Informe a data de nascimento (dd-mm-aaaa): ")
+     endereco = input("Informe o endereço (Rua, nº, cidade/sigla estado): ")
+
+     usuarios.append({"nome":nome, "data_nascimentto": data_nascimento, "cpf":cpf, "endereço": endereco})
+
+     print("Usuário criado com sucesso")
+
+def filtrar_usuario(cpf, usuarios):
+     usuarios_filtrados = [usuario for usuario in usuarios if usuario["cpf"] == cpf]
+     return usuarios_filtrados[0] if usuarios_filtrados else None
 
 while True:
     opcao = menu()
@@ -69,6 +92,10 @@ while True:
         print("Não foram realizadas movimentações." if not extrato else extrato)
         print(f"\nSaldo: R$ {saldo:.2f}")
         print("================================")
+
+    elif opcao == 6:
+         criar_usuario(usuarios)
+    
     
     elif opcao == 0:
         break
